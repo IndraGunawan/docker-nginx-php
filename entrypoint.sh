@@ -233,16 +233,6 @@ server {
     }
 }
 END
-        # set ACL
-        HTTPDUSER=`ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-        if [ -d "$DOMAIN_PATH/var" ]; then
-            setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX "$DOMAIN_PATH/var"
-            setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX "$DOMAIN_PATH/var"
-        elif [ -d "$DOMAIN_PATH/app" ]; then
-            setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX "$DOMAIN_PATH/app/cache" "$DOMAIN_PATH/app/logs"
-            setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX "$DOMAIN_PATH/app/cache" "$DOMAIN_PATH/app/logs"
-        fi
-
     elif [ $DOMAIN_TYPE = "rewrite_index" ]; then
         cat > "$CONF_DIR/$DOMAIN_NAME.conf" <<END
 server {
