@@ -10,7 +10,7 @@ NGINX_DIR=/etc/nginx
 CONF_DIR="$NGINX_DIR/conf.d"
 
 cat > "$NGINX_DIR/nginx.conf" <<END
-user www-data;
+user root;
 worker_processes 2;
 
 error_log  /var/log/nginx/error.log warn;

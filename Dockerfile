@@ -40,16 +40,21 @@ RUN \
 
 # Config PHP and NGINX
 RUN \
-    sed 's/pm.max_children = 5/pm.max_children = 50/g' -i /etc/php/7.0/fpm/pool.d/www.conf \
-    && sed -i 's/pm.start_servers = 2/pm.start_servers = 10/g' -i /etc/php/7.0/fpm/pool.d/www.conf \
-    && sed -i 's/pm.max_spare_servers = 3/pm.max_spare_servers = 15/g' -i /etc/php/7.0/fpm/pool.d/www.conf \
+    sed -i 's/pm.max_children = 5/pm.max_children = 50/g' /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i 's/pm.start_servers = 2/pm.start_servers = 10/g' /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i 's/pm.max_spare_servers = 3/pm.max_spare_servers = 15/g' /etc/php/7.0/fpm/pool.d/www.conf \
     && mkdir -p /run/php \
-    && chown www-data:www-data /run/php \
+    && chown root:root /run/php \
     && echo "Asia/Jakarta" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata \
-    && sed -i "s/;date.timezone =.*/date.timezone = Asia\/Jakarta/" /etc/php/7.0/fpm/php.ini \
-    && sed -i "s/;date.timezone =.*/date.timezone = Asia\/Jakarta/" /etc/php/7.0/cli/php.ini \
-    && sed -i "s/upload_max_filesize =.*/upload_max_filesize = 250M/" /etc/php/7.0/fpm/php.ini \
-    && sed -i "s/post_max_size =.*/post_max_size = 250M/" /etc/php/7.0/fpm/php.ini
+    && sed -i "s/;date.timezone =.*/date.timezone = Asia\/Jakarta/g" /etc/php/7.0/fpm/php.ini \
+    && sed -i "s/;date.timezone =.*/date.timezone = Asia\/Jakarta/g" /etc/php/7.0/cli/php.ini \
+    && sed -i "s/upload_max_filesize =.*/upload_max_filesize = 250M/g" /etc/php/7.0/fpm/php.ini \
+    && sed -i "s/memory_limit = 128M/memory_limit = 385M/g" /etc/php/7.0/fpm/php.ini \
+    && sed -i "s/post_max_size =.*/post_max_size = 250M/g" /etc/php/7.0/fpm/php.ini \
+    && sed -i 's/user = www-data = 2/user = root/g' /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i 's/group = www-data/group = root/g' /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i 's/listen.owner = www-data = 2/listen.owner = root/g' /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i 's/listen.group = www-data/listen.group = root/g' /etc/php/7.0/fpm/pool.d/www.conf \
 
 # Clear cache
 RUN \
