@@ -51,9 +51,9 @@ RUN \
     && sed -i "s/upload_max_filesize =.*/upload_max_filesize = 250M/g" /etc/php/7.0/fpm/php.ini \
     && sed -i "s/memory_limit = 128M/memory_limit = 385M/g" /etc/php/7.0/fpm/php.ini \
     && sed -i "s/post_max_size =.*/post_max_size = 250M/g" /etc/php/7.0/fpm/php.ini \
-    && sed -i "s/user = www-data = 2/user = root/g" /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i "s/user = www-data/user = root/g" /etc/php/7.0/fpm/pool.d/www.conf \
     && sed -i "s/group = www-data/group = root/g" /etc/php/7.0/fpm/pool.d/www.conf \
-    && sed -i "s/listen.owner = www-data = 2/listen.owner = root/g" /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i "s/listen.owner = www-data/listen.owner = root/g" /etc/php/7.0/fpm/pool.d/www.conf \
     && sed -i "s/listen.group = www-data/listen.group = root/g" /etc/php/7.0/fpm/pool.d/www.conf
 
 # Clear cache
