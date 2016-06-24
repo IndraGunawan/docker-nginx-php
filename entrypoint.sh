@@ -275,4 +275,4 @@ if [ ! -z $TIMEZONE ] && [ -f /etc/php/7.0/fpm/php.ini ] && [ -f /etc/php/7.0/cl
 fi
 
 # Start PHP and NGINX
-php-fpm7.0 && nginx -g 'daemon off;'
+php-fpm7.0 -R && nginx -g 'daemon off;'
