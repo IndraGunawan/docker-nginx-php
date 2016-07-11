@@ -9,6 +9,7 @@ RUN \
     && apt-get install -y --no-install-recommends \
         curl \
         git-core \
+        openssh-client \
         unzip \
         vim \
         wget
