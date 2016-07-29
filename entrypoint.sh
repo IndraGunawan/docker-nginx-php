@@ -8,10 +8,11 @@
 # Nginx Configuration
 NGINX_DIR=/etc/nginx
 CONF_DIR="$NGINX_DIR/conf.d"
+NGINX_WORKER=$(grep -c "processor" /proc/cpuinfo)
 
 cat > "$NGINX_DIR/nginx.conf" <<END
 user root;
-worker_processes 2;
+worker_processes $NGINX_WORKER;
 
 error_log  /var/log/nginx/error.log warn;
 pid        /var/run/nginx.pid;
