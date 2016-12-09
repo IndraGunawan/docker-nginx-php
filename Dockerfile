@@ -59,7 +59,8 @@ RUN \
     && sed -i "s/user = www-data/user = root/g" /etc/php/7.0/fpm/pool.d/www.conf \
     && sed -i "s/group = www-data/group = root/g" /etc/php/7.0/fpm/pool.d/www.conf \
     && sed -i "s/listen.owner = www-data/listen.owner = root/g" /etc/php/7.0/fpm/pool.d/www.conf \
-    && sed -i "s/listen.group = www-data/listen.group = root/g" /etc/php/7.0/fpm/pool.d/www.conf
+    && sed -i "s/listen.group = www-data/listen.group = root/g" /etc/php/7.0/fpm/pool.d/www.conf \
+    && sed -i "s/listen       80;/listen       80    default_server;/g" /etc/nginx/conf.d/default.conf
 
 # Clear cache
 RUN \

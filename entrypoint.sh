@@ -266,6 +266,7 @@ END
         echo "Invalid type DOMAIN_$count = $DOMAIN_TYPE, available type (php|static|symfony|rewrite_index)" >&2
     fi
 
+    echo "127.0.0.1 $DOMAIN_NAME" >> /etc/hosts
 done
 
 # Change timezone if provide
