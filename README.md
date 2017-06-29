@@ -1,1 +1,1 @@
-# Docker Nginx + PHP-FPM 7, Debian Jessi based.
+# Docker Nginx + PHP 7.0 + Debian Stretch based.
