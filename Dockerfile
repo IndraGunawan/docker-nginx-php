@@ -5,8 +5,9 @@ MAINTAINER Indra Gunawan <guind.online@gmail.com>
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN \
-    apt update \
-    && apt install -y --no-install-recommends \
+    apt-get update \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
         curl \
         git-core \
         openssh-client \
@@ -16,7 +17,7 @@ RUN \
 
 # PHP 7.0
 RUN \
-    apt install -y --no-install-recommends \
+    apt-get install -y --no-install-recommends \
         php7.0-bcmath \
         php7.0-cli \
         php7.0-common \
@@ -57,8 +58,8 @@ RUN \
 
 # Clear cache
 RUN \
-    apt clean \
-    && apt autoremove --purge \
+    apt-get clean \
+    && apt-get autoremove --purge \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Project
