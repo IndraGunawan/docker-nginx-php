@@ -57,8 +57,8 @@ RUN \
 
 # Clear cache
 RUN \
-    apt-get clean \
-    && apt-get autoremove --purge \
+    apt clean \
+    && apt autoremove --purge \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Project
