@@ -5,7 +5,7 @@ MAINTAINER Indra Gunawan <guind.online@gmail.com>
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN \
-    apt-get update \
+    apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
