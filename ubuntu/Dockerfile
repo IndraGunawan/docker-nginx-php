@@ -11,6 +11,7 @@ RUN \
         curl \
         git-core \
         openssh-client \
+        openssl \
         unzip \
         vim \
         wget
