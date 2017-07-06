@@ -1,1 +1,1 @@
-# Docker Nginx + PHP 7.0 + Debian Stretch based.
+# Docker Nginx + PHP 7.1
