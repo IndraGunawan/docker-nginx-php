@@ -1,1 +1,1 @@
-# Docker Nginx + PHP 7.1
+# Docker Nginx + PHP 7
