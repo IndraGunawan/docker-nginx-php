@@ -21,7 +21,11 @@ RUN \
     wget --quiet -O - https://nginx.org/keys/nginx_signing.key | apt-key add - \
     && echo "deb http://nginx.org/packages/mainline/ubuntu/ xenial nginx" >> /etc/apt/sources.list.d/nginx.list \
     && echo "deb-src http://nginx.org/packages/mainline/ubuntu/ xenial nginx" >> /etc/apt/sources.list.d/nginx.list \
-    && apt-get update && apt-get install -y --no-install-recommends nginx=1.13.2-1~xenial
+    && apt-get update && apt-get install -y --no-install-recommends nginx=1.13.2-1~xenial \
+
+    # forward request and error logs to docker log collector
+    && ln -sf /dev/stdout /var/log/nginx/access.log \
+	&& ln -sf /dev/stderr /var/log/nginx/error.log
 
 EXPOSE 80
 
@@ -51,7 +55,9 @@ RUN \
         php-imagick \
         php-mongodb \
         php-redis \
-        php-xdebug
+        php-xdebug \
+    # forward logs to docker log collector
+    && ln -sf /dev/stdout /var/log/php7.1-fpm.log
 
 # Config PHP and NGINX
 RUN \
@@ -66,6 +72,9 @@ RUN \
     && sed -i "s/group = www-data/group = root/g" /etc/php/7.1/fpm/pool.d/www.conf \
     && sed -i "s/listen.owner = www-data/listen.owner = root/g" /etc/php/7.1/fpm/pool.d/www.conf \
     && sed -i "s/listen.group = www-data/listen.group = root/g" /etc/php/7.1/fpm/pool.d/www.conf \
+    && sed -i "s/pm = dynamic/pm = ondemand/g" /etc/php/7.1/fpm/pool.d/www.conf \
+    && sed -i "s/pm.max_children = 5/pm.max_children = 25/g" /etc/php/7.1/fpm/pool.d/www.conf \
+    && sed -i "s/;pm.process_idle_timeout = 10s;/pm.process_idle_timeout = 10s;/g" /etc/php/7.1/fpm/pool.d/www.conf \
     && sed -i "s/worker_processes 2;/worker_processes auto;/g" /etc/nginx/nginx.conf \
     && sed -i "s/listen       80;/listen       80    default_server;/g" /etc/nginx/conf.d/default.conf \
 
