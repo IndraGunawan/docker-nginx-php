@@ -32,7 +32,9 @@ EXPOSE 80
 # PHP 7.0
 
 RUN \
-    apt-get update \
+    apt-get install -y --no-install-recommends software-properties-common \
+    && LANG=C.UTF-8 add-apt-repository -y ppa:ondrej/php \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
         php7.0-bcmath \
         php7.0-cli \
