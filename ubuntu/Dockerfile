@@ -10,6 +10,7 @@ RUN \
         ca-certificates \
         curl \
         git-core \
+        make \
         openssh-client \
         openssl \
         unzip \
