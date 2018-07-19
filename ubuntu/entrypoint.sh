@@ -234,6 +234,56 @@ server {
     }
 }
 END
+    elif [ $DOMAIN_TYPE = "symfony4" ]; then
+        cat > "$CONF_DIR/$DOMAIN_NAME.conf" <<END
+server {
+    listen 80;
+    server_name $DOMAIN_NAME;
+    root $DOMAIN_PATH/web;
+    index index.php;
+
+    location / {
+        # try to serve file directly, fallback to app.php
+        try_files \$uri /index.php\$is_args\$args;
+    }
+
+    location ~ ^/index\.php(/|\$) {
+        fastcgi_max_temp_file_size 1M;
+        fastcgi_pass_header Set-Cookie;
+        fastcgi_pass_header Cookie;
+        fastcgi_ignore_headers Cache-Control Expires Set-Cookie;
+        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+        fastcgi_param  PATH_INFO          \$fastcgi_path_info;
+        fastcgi_param  PATH_TRANSLATED    \$document_root\$fastcgi_path_info;
+
+        fastcgi_pass upstream;
+        fastcgi_split_path_info ^(.+\.php)(/.*)\$;
+        include fastcgi_params;
+        # When you are using symlinks to link the document root to the
+        # current version of your application, you should pass the real
+        # application path instead of the path to the symlink to PHP
+        # FPM.
+        # Otherwise, PHP's OPcache may not properly detect changes to
+        # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+        # for more information).
+        fastcgi_param  SCRIPT_FILENAME  \$realpath_root\$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT \$realpath_root;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location ~ \.php$ {
+        fastcgi_keep_conn on;
+        fastcgi_pass upstream;
+        fastcgi_param  SCRIPT_FILENAME  \$realpath_root\$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT \$realpath_root;
+
+        include fastcgi_params;
+    }
+}
+END
     elif [ $DOMAIN_TYPE = "rewrite_index" ]; then
         cat > "$CONF_DIR/$DOMAIN_NAME.conf" <<END
 server {
