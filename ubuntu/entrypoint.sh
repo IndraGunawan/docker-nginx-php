@@ -239,7 +239,7 @@ END
 server {
     listen 80;
     server_name $DOMAIN_NAME;
-    root $DOMAIN_PATH/web;
+    root $DOMAIN_PATH/public;
     index index.php;
 
     location / {
