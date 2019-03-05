@@ -39,7 +39,7 @@ http {
 END
 
 if [ -z $PHP_FPM_SERVER ]; then
-    FPM_SERVER="unix:/run/php/php7.2-fpm.sock;"
+    FPM_SERVER="unix:/run/php/php7.3-fpm.sock;"
 else
     FPM_SERVER="$PHP_FPM_SERVER;"
 fi
@@ -313,18 +313,18 @@ server {
 }
 END
     else
-        echo "Invalid type DOMAIN_$count = $DOMAIN_TYPE, available type (php|static|symfony|symfony4|rewrite_index)" >&2
+        echo "Invalid type DOMAIN_$count = $DOMAIN_TYPE, available type (php|static|symfony|smfony4|rewrite_index)" >&2
     fi
 
     echo "127.1.0.1 $DOMAIN_NAME" >> /etc/hosts
 done
 
 # Change timezone if provide
-if [ ! -z $TIMEZONE ] && [ -f /etc/php/7.2/fpm/php.ini ] && [ -f /etc/php/7.2/cli/php.ini ]; then
-    sed -i "s/date.timezone =.*/date.timezone = $TIMEZONE/" /etc/php/7.2/fpm/php.ini
-    sed -i "s/date.timezone =.*/date.timezone = $TIMEZONE/" /etc/php/7.2/cli/php.ini
+if [ ! -z $TIMEZONE ] && [ -f /etc/php/7.3/fpm/php.ini ] && [ -f /etc/php/7.3/cli/php.ini ]; then
+    sed -i "s/date.timezone =.*/date.timezone = $TIMEZONE/" /etc/php/7.3/fpm/php.ini
+    sed -i "s/date.timezone =.*/date.timezone = $TIMEZONE/" /etc/php/7.3/cli/php.ini
     echo $TIMEZONE > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 fi
 
 # Start PHP and NGINX
-php-fpm7.2 -R && nginx -g 'daemon off;'
+php-fpm7.3 -R && nginx -g 'daemon off;'
