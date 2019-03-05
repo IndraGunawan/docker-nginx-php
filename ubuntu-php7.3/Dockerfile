@@ -1,6 +1,6 @@
 FROM ubuntu:xenial
 
-LABEL maintainer="Indra Gunawan <guind.online@gmail.com>"
+LABEL maintainer="Nipe Setiawan Harefa <nipeharefa@gmail.com>"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
